@@ -1,14 +1,77 @@
+/*
+ *  BIP44
+ *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  Original source: https://github.com/NovaCrypto/BIP44
+ *  You can contact the authors via github issues.
+ */
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+    }
+}
+
+apply plugin: 'java'
+apply from: 'bintray.gradle'
+
+// Generate a dependency version update report for release
+// ./gradlew dependencyUpdates -Drevision=release
+// https://github.com/ben-manes/gradle-versions-plugin
+apply plugin: 'com.github.ben-manes.versions'
+
 group 'io.github.novacrypto'
 version '0.0.1'
 
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
+// To upload a new version
+// ./gradlew clean build bintrayUpload -Puser=user -Pkey=APIKEY
+bintray {
+    user = project.ext.properties.user
+    key = project.ext.properties.key
+    publications = ['MyPublication']
+    pkg {
+        repo = 'BIP'
+        name = 'BIP44'
+        userOrg = 'novacrypto'
+        licenses = ['GPL-3.0']
+        vcsUrl = 'https://github.com/NovaCrypto/BIP44.git'
+        version {
+            name = project.version
+        }
+    }
+}
 
 repositories {
-    mavenCentral()
+    jcenter()
+}
+
+compileJava {
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    //compile 'io.github.novacrypto:ToRuntime:0.9.0@jar'
+    testCompile 'junit:junit:4.12'
+    //testCompile 'com.google.code.gson:gson:2.7'
+    //testCompile 'org.assertj:assertj-core:3.8.0'
+    //testCompile 'io.github.novacrypto:Base58:0.1.0@jar'
+    //testCompile 'io.github.novacrypto:BIP39:0.1.2@jar'
 }
