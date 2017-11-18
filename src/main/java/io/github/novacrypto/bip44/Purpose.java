@@ -34,7 +34,7 @@ public final class Purpose {
         return new Purpose(purpose);
     }
 
-    int getValue() {
+    public int getValue() {
         return purpose;
     }
 

@@ -36,11 +36,11 @@ public final class CoinType {
         string = String.format("%s/%d'", purpose, coinType);
     }
 
-    int getValue() {
+    public int getValue() {
         return coinType;
     }
 
-    Purpose getParent() {
+    public Purpose getParent() {
         return purpose;
     }
 

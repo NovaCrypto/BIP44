@@ -22,6 +22,7 @@
 package io.github.novacrypto;
 
 import io.github.novacrypto.bip44.CoinType;
+import io.github.novacrypto.bip44.Purpose;
 import org.junit.Test;
 
 import static io.github.novacrypto.bip44.Purpose.purpose;
@@ -38,6 +39,22 @@ public final class CoinTypeTests {
     @Test
     public void coinType1_BitcoinTestNet() {
         assertEquals("m/44'/1'", purpose(44).coinType(1).toString());
+    }
+
+    @Test
+    public void coinType0getValue() {
+        assertEquals(0, purpose(44).coinType(0).getValue());
+    }
+
+    @Test
+    public void coinType1getValue() {
+        assertEquals(1, purpose(44).coinType(1).getValue());
+    }
+
+    @Test
+    public void getParent() {
+        final Purpose expected = purpose(44);
+        assertSame(expected, expected.coinType(0).getParent());
     }
 
     @Test

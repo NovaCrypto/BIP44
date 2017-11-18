@@ -36,11 +36,11 @@ public final class Account {
         string = String.format("%s/%d'", coinType, account);
     }
 
-    int getValue() {
+    public int getValue() {
         return account;
     }
 
-    CoinType getParent() {
+    public CoinType getParent() {
         return coinType;
     }
 

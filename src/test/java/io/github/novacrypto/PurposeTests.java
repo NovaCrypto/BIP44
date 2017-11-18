@@ -41,6 +41,16 @@ public final class PurposeTests {
     }
 
     @Test
+    public void purpose44getValue() {
+        assertEquals(44, purpose(44).getValue());
+    }
+
+    @Test
+    public void purpose49getValue() {
+        assertEquals(49, purpose(49).getValue());
+    }
+
+    @Test
     public void purposeStringIsPreCalculated() {
         final Purpose purpose = purpose(44);
         assertSame(purpose.toString(), purpose.toString());

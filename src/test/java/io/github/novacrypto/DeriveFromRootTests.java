@@ -22,6 +22,7 @@
 package io.github.novacrypto;
 
 import io.github.novacrypto.bip32.PrivateKey;
+import io.github.novacrypto.bip32.derivation.Derive;
 import io.github.novacrypto.bip32.networks.Bitcoin;
 import io.github.novacrypto.bip39.SeedCalculator;
 import io.github.novacrypto.bip44.AddressIndex;
@@ -35,10 +36,14 @@ import java.util.Collection;
 
 import static io.github.novacrypto.bip44.Purpose.purpose;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 
 @RunWith(Parameterized.class)
 public final class DeriveFromRootTests {
+
+    private static final PrivateKey rootKey = PrivateKey.fromSeed(new SeedCalculator().calculateSeed("dial repeat accuse hen century accident route indicate middle render gate dignity",
+            ""), Bitcoin.MAIN_NET);
 
     private final String path;
     private final AddressIndex addressIndex;
@@ -65,13 +70,18 @@ public final class DeriveFromRootTests {
         assertEquals(path, addressIndex.toString());
     }
 
-    final PrivateKey rootKey = PrivateKey.fromSeed(new SeedCalculator().calculateSeed("", ""), Bitcoin.MAIN_NET);
-
     @Test
     public void derive() {
-        final String s = rootKey.derive(path).neuter().p2pkhAddress();
-        final String s1 = rootKey.derive(addressIndex, AddressIndex.DERIVATION).neuter().p2pkhAddress();
-        assertEquals(s, s1);
+        String expected = rootKey.derive(path).neuter().p2pkhAddress();
+        String actual = rootKey.derive(addressIndex, AddressIndex.DERIVATION).neuter().p2pkhAddress();
+        assertEquals(expected, actual);
     }
 
+    @Test
+    public void deriveWithCache() {
+        final Derive<PrivateKey> withCache = rootKey.deriveWithCache();
+        PrivateKey expected = withCache.derive(path);
+        PrivateKey actual = withCache.derive(addressIndex, AddressIndex.DERIVATION);
+        assertSame(expected, actual);
+    }
 }

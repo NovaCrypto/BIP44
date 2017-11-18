@@ -46,11 +46,32 @@ public final class AccountTests {
     }
 
     @Test
+    public void account0getValue() {
+        assertEquals(0,
+                purpose(44).coinType(0).account(0)
+                        .getValue());
+    }
+
+    @Test
+    public void account1getValue() {
+        assertEquals(1,
+                purpose(44).coinType(0).account(1)
+                        .getValue());
+    }
+
+    @Test
+    public void getParent() {
+        final CoinType expected = purpose(44).coinType(0);
+        assertSame(expected, expected.account(0).getParent());
+    }
+
+    @Test
     public void alternativePurposeAndCoinType() {
         assertEquals("m/49'/1'/10'",
                 purpose(49).coinType(1).account(10)
                         .toString());
     }
+
     @Test
     public void stringIsPreCalculated() {
         final Account account = purpose(44).coinType(0).account(0);

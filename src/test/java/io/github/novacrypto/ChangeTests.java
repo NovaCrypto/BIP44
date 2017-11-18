@@ -21,6 +21,7 @@
 
 package io.github.novacrypto;
 
+import io.github.novacrypto.bip44.Account;
 import io.github.novacrypto.bip44.Change;
 import org.junit.Test;
 
@@ -42,6 +43,26 @@ public final class ChangeTests {
         assertEquals("m/44'/0'/0'/1",
                 purpose(44).coinType(0).account(0).internal()
                         .toString());
+    }
+
+    @Test
+    public void externalGetValue() {
+        assertEquals(0,
+                purpose(44).coinType(0).account(0).external()
+                        .getValue());
+    }
+
+    @Test
+    public void internalGetValue() {
+        assertEquals(1,
+                purpose(44).coinType(0).account(0).internal()
+                        .getValue());
+    }
+
+    @Test
+    public void getParent() {
+        final Account expected = purpose(44).coinType(0).account(0);
+        assertSame(expected, expected.internal().getParent());
     }
 
     @Test

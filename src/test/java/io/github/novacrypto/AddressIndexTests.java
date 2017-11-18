@@ -22,6 +22,7 @@
 package io.github.novacrypto;
 
 import io.github.novacrypto.bip44.AddressIndex;
+import io.github.novacrypto.bip44.Change;
 import org.junit.Test;
 
 import static io.github.novacrypto.bip44.Purpose.purpose;
@@ -44,6 +45,28 @@ public final class AddressIndexTests {
                 purpose(44).coinType(0).account(0).external()
                         .address(1)
                         .toString());
+    }
+
+    @Test
+    public void address0getValue() {
+        assertEquals(0,
+                purpose(44).coinType(0).account(0).external()
+                        .address(0)
+                        .getValue());
+    }
+
+    @Test
+    public void address1getValue() {
+        assertEquals(1,
+                purpose(44).coinType(0).account(0).external()
+                        .address(1)
+                        .getValue());
+    }
+
+    @Test
+    public void getParent() {
+        final Change expected = purpose(44).coinType(0).account(0).external();
+        assertSame(expected, expected.address(0).getParent());
     }
 
     @Test

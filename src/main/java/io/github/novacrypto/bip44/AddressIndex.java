@@ -37,11 +37,11 @@ public final class AddressIndex {
         string = String.format("%s/%d", change, addressIndex);
     }
 
-    int getValue() {
+    public int getValue() {
         return addressIndex;
     }
 
-    Change getParent() {
+    public Change getParent() {
         return change;
     }
 

@@ -28,15 +28,19 @@ import static io.github.novacrypto.bip32.Index.hard;
 final class AddressIndexDerivation implements Derivation<AddressIndex> {
     @Override
     public <Node> Node derive(final Node root, final AddressIndex addressIndex, final Visitor<Node> visitor) {
+        final Change change = addressIndex.getParent();
+        final Account account = change.getParent();
+        final CoinType coinType = account.getParent();
+        final Purpose purpose = coinType.getParent();
         return visitor.visit(
                 visitor.visit(
                         visitor.visit(
                                 visitor.visit(
                                         visitor.visit(root,
-                                                hard(addressIndex.getParent().getParent().getParent().getParent().getValue())),
-                                        hard(addressIndex.getParent().getParent().getParent().getValue())),
-                                hard(addressIndex.getParent().getParent().getValue())),
-                        addressIndex.getParent().getValue()),
+                                                hard(purpose.getValue())),
+                                        hard(coinType.getValue())),
+                                hard(account.getValue())),
+                        change.getValue()),
                 addressIndex.getValue());
     }
 }

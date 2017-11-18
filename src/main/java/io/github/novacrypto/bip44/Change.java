@@ -32,11 +32,11 @@ public final class Change {
         string = String.format("%s/%d", account, change);
     }
 
-    int getValue() {
+    public int getValue() {
         return change;
     }
 
-    Account getParent() {
+    public Account getParent() {
         return account;
     }
 
