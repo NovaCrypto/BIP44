@@ -25,6 +25,7 @@ import io.github.novacrypto.bip32.derivation.Derivation;
 
 public final class AddressIndex {
     public static final Derivation<AddressIndex> DERIVATION = new AddressIndexDerivation();
+    public static final Derivation<AddressIndex> DERIVATION_FROM_ACCOUNT = new AddressIndexFromAccountDerivation();
 
     private final Change change;
     private final int addressIndex;

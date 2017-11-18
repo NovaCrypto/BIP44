@@ -23,42 +23,13 @@ package io.github.novacrypto.bip44;
 
 import io.github.novacrypto.bip32.derivation.Derivation;
 
-import static io.github.novacrypto.bip32.Index.hardened;
-
-public final class Account {
-    public static final Derivation<Account> DERIVATION = new AccountDerivation();
-
-    private final CoinType coinType;
-    private final int account;
-    private final String string;
-
-    Account(final CoinType coinType, final int account) {
-        if (hardened(account))
-            throw new IllegalArgumentException();
-        this.coinType = coinType;
-        this.account = account;
-        string = String.format("%s/%d'", coinType, account);
-    }
-
-    public int getValue() {
-        return account;
-    }
-
-    public CoinType getParent() {
-        return coinType;
-    }
-
+final class AddressIndexFromAccountDerivation implements Derivation<AddressIndex> {
     @Override
-    public String toString() {
-        return string;
+    public <Node> Node derive(final Node accountNode, final AddressIndex addressIndex, final Visitor<Node> visitor) {
+        final Change change = addressIndex.getParent();
+        return visitor.visit(
+                visitor.visit(accountNode,
+                        change.getValue()),
+                addressIndex.getValue());
     }
-
-    public Change external() {
-        return new Change(this, 0);
-    }
-
-    public Change internal() {
-        return new Change(this, 1);
-    }
-
 }
