@@ -21,29 +21,35 @@
 
 package io.github.novacrypto.bip44;
 
-public final class Purpose {
-    private final int purpose;
-    private final String toString;
+import static io.github.novacrypto.bip32.Index.hardened;
 
-    Purpose(final int purpose) {
+public final class CoinType {
+    private final Purpose purpose;
+    private final int coinType;
+    private final String string;
+
+    CoinType(final Purpose purpose, final int coinType) {
+        if (hardened(coinType))
+            throw new IllegalArgumentException();
         this.purpose = purpose;
-        toString = String.format("m/%d'", purpose);
-    }
-
-    public static Purpose purpose(final int purpose) {
-        return new Purpose(purpose);
+        this.coinType = coinType;
+        string = String.format("%s/%d'", purpose, coinType);
     }
 
     int getValue() {
+        return coinType;
+    }
+
+    Purpose getParent() {
         return purpose;
     }
 
     @Override
     public String toString() {
-        return toString;
+        return string;
     }
 
-    public CoinType coinType(final int coinType) {
-        return new CoinType(this, coinType);
+    public Account account(final int account) {
+        return new Account(this, account);
     }
 }

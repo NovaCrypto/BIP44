@@ -21,29 +21,31 @@
 
 package io.github.novacrypto.bip44;
 
-public final class Purpose {
-    private final int purpose;
-    private final String toString;
+public final class Change {
+    private final Account account;
+    private final int change;
+    private final String string;
 
-    Purpose(final int purpose) {
-        this.purpose = purpose;
-        toString = String.format("m/%d'", purpose);
-    }
-
-    public static Purpose purpose(final int purpose) {
-        return new Purpose(purpose);
+    Change(final Account account, final int change) {
+        this.account = account;
+        this.change = change;
+        string = String.format("%s/%d", account, change);
     }
 
     int getValue() {
-        return purpose;
+        return change;
+    }
+
+    Account getParent() {
+        return account;
     }
 
     @Override
     public String toString() {
-        return toString;
+        return string;
     }
 
-    public CoinType coinType(final int coinType) {
-        return new CoinType(this, coinType);
+    public AddressIndex address(final int addressIndex) {
+        return new AddressIndex(this, addressIndex);
     }
 }

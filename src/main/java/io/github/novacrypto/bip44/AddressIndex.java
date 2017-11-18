@@ -21,29 +21,32 @@
 
 package io.github.novacrypto.bip44;
 
-public final class Purpose {
-    private final int purpose;
-    private final String toString;
+import io.github.novacrypto.bip32.derivation.Derivation;
 
-    Purpose(final int purpose) {
-        this.purpose = purpose;
-        toString = String.format("m/%d'", purpose);
-    }
+public final class AddressIndex {
+    public static final Derivation<AddressIndex> DERIVATION = new AddressIndexDerivation();
 
-    public static Purpose purpose(final int purpose) {
-        return new Purpose(purpose);
+    private final Change change;
+    private final int addressIndex;
+
+    private final String string;
+
+    AddressIndex(final Change change, final int addressIndex) {
+        this.change = change;
+        this.addressIndex = addressIndex;
+        string = String.format("%s/%d", change, addressIndex);
     }
 
     int getValue() {
-        return purpose;
+        return addressIndex;
+    }
+
+    Change getParent() {
+        return change;
     }
 
     @Override
     public String toString() {
-        return toString;
-    }
-
-    public CoinType coinType(final int coinType) {
-        return new CoinType(this, coinType);
+        return string;
     }
 }
