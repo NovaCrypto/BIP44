@@ -2,7 +2,7 @@
 
 # Install
 
-Use either of these repositories:
+Repository:
 
 ```
 repositories {
@@ -16,7 +16,7 @@ Add dependency:
 
 ```
 dependencies {
-    compile 'io.github.novacrypto:BIP44:0.0.1@jar'
+    compile 'io.github.novacrypto:BIP44:0.0.1'
 }
 
 ```
