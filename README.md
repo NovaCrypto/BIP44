@@ -26,7 +26,9 @@ dependencies {
 ## Fluent construction
 
 ```
-AddressIndex addressIndex = purpose(44)
+AddressIndex addressIndex = BIP44
+                                .m()
+                                .purpose44()
                                 .coinType(2)
                                 .account(1)
                                 .external()
@@ -36,12 +38,12 @@ AddressIndex addressIndex = purpose(44)
 ## To string
 
 ```
-String path = purpose(44)
-                  .coinType(2)
-                  .account(1)
-                  .external()
-                  .address(5)
-                  .toString(); //"m/44'/2'/1'/0/5"
+String path = m().purpose44()
+                 .coinType(2)
+                 .account(1)
+                 .external()
+                 .address(5)
+                 .toString(); //"m/44'/2'/1'/0/5"
 ```
 
 # Deriving
@@ -58,25 +60,25 @@ YourKeyType ketAtPath = derive.derive(addressIndex, AddressIndex.DERIVATION);
 ## Account from root
 
 ```
-Account account = purpose(44)
-                  .coinType(2)
-                  .account(1);
+Account account = m().purpose44()
+                     .coinType(2)
+                     .account(1);
 YourKeyType addressKey = derive
-                  .derive(account, Account.DERIVATION);
+                     .derive(account, Account.DERIVATION);
 ```
 
 ## From account private
 
 ```
 YourKeyType addressKey = accountPrivateKey
-                  .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
+                     .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
 ```
 
 ## From account public
 
 ```
 YourKeyType addressKey = accountPublicKey
-                  .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
+                     .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
 ```
 
 # Deriving from NovaCrypto BIP32
@@ -91,29 +93,29 @@ Using [NovaCrypto/BIP32](https://github.com/NovaCrypto/BIP32) keys, which implem
 
 ```
 PrivateKey addressKey = rootPrivateKey
-                  .derive(addressIndex, AddressIndex.DERIVATION);
+                     .derive(addressIndex, AddressIndex.DERIVATION);
 ```
 
 ## Account from root
 
 ```
-Account account = purpose(44)
-                  .coinType(2)
-                  .account(1);
+Account account = m().purpose44()
+                     .coinType(2)
+                     .account(1);
 PrivateKey addressKey = rootPrivateKey
-                  .derive(account, Account.DERIVATION);
+                     .derive(account, Account.DERIVATION);
 ```
 
 ## From account private
 
 ```
 PrivateKey addressKey = accountPrivateKey
-                  .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
+                     .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
 ```
 
 ## From account public
 
 ```
 PublicKey addressKey = accountPublicKey
-                  .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
+                     .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
 ```

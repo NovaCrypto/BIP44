@@ -25,6 +25,21 @@ import io.github.novacrypto.bip32.derivation.Derivation;
 
 import static io.github.novacrypto.bip32.Index.isHardened;
 
+/**
+ * The 4th level of a BIP44 path, create via a {@link Change}.
+ * m / purpose' / coin_type' / account' / change / address_index
+ * <p>
+ * This level splits the key space into independent user identities, so the wallet never mixes the coins across
+ * different accounts.
+ * <p>
+ * Users can use these accounts to organize the funds in the same fashion as bank accounts; for donation purposes
+ * (where all addresses are considered public), for saving purposes, for common expenses etc.
+ * <p>
+ * Accounts are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32
+ * derivation.
+ * <p>
+ * Hardened derivation is used at this level.
+ */
 public final class Account {
     public static final Derivation<Account> DERIVATION = new AccountDerivation();
 
@@ -53,10 +68,28 @@ public final class Account {
         return string;
     }
 
+    /**
+     * Create a {@link Change} for this purpose, coin type and account.
+     * <p>
+     * Constant 0 is used for external chain.
+     * External chain is used for addresses that are meant to be visible outside of the wallet (e.g. for receiving
+     * payments).
+     *
+     * @return A {@link Change} = 0 instance for this purpose, coin type and account
+     */
     public Change external() {
         return new Change(this, 0);
     }
 
+    /**
+     * Create a {@link Change} for this purpose, coin type and account.
+     * <p>
+     * Constant 1 is used for internal chain (also known as change addresses).
+     * Internal chain is used for addresses which are not meant to be visible outside of the wallet and is used for
+     * return transaction change.
+     *
+     * @return A {@link Change} = 1 instance for this purpose, coin type and account
+     */
     public Change internal() {
         return new Change(this, 1);
     }

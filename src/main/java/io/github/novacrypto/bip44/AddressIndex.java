@@ -25,6 +25,15 @@ import io.github.novacrypto.bip32.derivation.Derivation;
 
 import static io.github.novacrypto.bip32.Index.isHardened;
 
+/**
+ * The 6th and final part of a BIP44 path, create via a {@link Change}.
+ * m / purpose' / coin_type' / account' / change / address_index
+ * <p>
+ * Addresses are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32
+ * derivation.
+ * <p>
+ * Public derivation is used at this level (not hardened).
+ */
 public final class AddressIndex {
     public static final Derivation<AddressIndex> DERIVATION = new AddressIndexDerivation();
     public static final Derivation<AddressIndex> DERIVATION_FROM_ACCOUNT = new AddressIndexFromAccountDerivation();

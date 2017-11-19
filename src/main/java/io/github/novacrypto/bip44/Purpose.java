@@ -21,17 +21,32 @@
 
 package io.github.novacrypto.bip44;
 
+import static io.github.novacrypto.bip32.Index.isHardened;
+
+/**
+ * Represents the 1st level of a BIP44 path. To create, start with the static factory method {@link BIP44#m()}.
+ * m / purpose' / coin_type' / account' / change / address_index
+ * <p>
+ * Purpose is a constant set to 44' (or 0x8000002C) following the BIP43 recommendation. It indicates that the subtree of
+ * this node is used according to this specification.
+ * <p>
+ * Purpose 49 is used for segwit as per BIP0049.
+ * <p>
+ * Purpose 0 is reserved by BIP0032.
+ * <p>
+ * Hardened derivation is used at this level.
+ */
 public final class Purpose {
+    private final M m;
     private final int purpose;
     private final String toString;
 
-    Purpose(final int purpose) {
+    Purpose(final M m, final int purpose) {
+        this.m = m;
+        if (purpose == 0 || isHardened(purpose))
+            throw new IllegalArgumentException();
         this.purpose = purpose;
-        toString = String.format("m/%d'", purpose);
-    }
-
-    public static Purpose purpose(final int purpose) {
-        return new Purpose(purpose);
+        toString = String.format("%s/%d'", m, purpose);
     }
 
     public int getValue() {
@@ -43,6 +58,12 @@ public final class Purpose {
         return toString;
     }
 
+    /**
+     * Create a {@link CoinType} for this purpose.
+     *
+     * @param coinType The coin type
+     * @return A coin type instance for this purpose
+     */
     public CoinType coinType(final int coinType) {
         return new CoinType(this, coinType);
     }

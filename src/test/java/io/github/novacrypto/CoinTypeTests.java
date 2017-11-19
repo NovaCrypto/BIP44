@@ -25,7 +25,7 @@ import io.github.novacrypto.bip44.CoinType;
 import io.github.novacrypto.bip44.Purpose;
 import org.junit.Test;
 
-import static io.github.novacrypto.bip44.Purpose.purpose;
+import static io.github.novacrypto.bip44.BIP44.m;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -33,43 +33,43 @@ public final class CoinTypeTests {
 
     @Test
     public void coinType0_Bitcoin() {
-        assertEquals("m/44'/0'", purpose(44).coinType(0).toString());
+        assertEquals("m/44'/0'", m().purpose(44).coinType(0).toString());
     }
 
     @Test
     public void coinType1_BitcoinTestNet() {
-        assertEquals("m/44'/1'", purpose(44).coinType(1).toString());
+        assertEquals("m/44'/1'", m().purpose(44).coinType(1).toString());
     }
 
     @Test
     public void coinType0getValue() {
-        assertEquals(0, purpose(44).coinType(0).getValue());
+        assertEquals(0, m().purpose(44).coinType(0).getValue());
     }
 
     @Test
     public void coinType1getValue() {
-        assertEquals(1, purpose(44).coinType(1).getValue());
+        assertEquals(1, m().purpose(44).coinType(1).getValue());
     }
 
     @Test
     public void getParent() {
-        final Purpose expected = purpose(44);
+        final Purpose expected = m().purpose(44);
         assertSame(expected, expected.coinType(0).getParent());
     }
 
     @Test
     public void prupose49_coinType1_Bitcoin() {
-        assertEquals("m/49'/1'", purpose(49).coinType(1).toString());
+        assertEquals("m/49'/1'", m().purpose(49).coinType(1).toString());
     }
 
     @Test
     public void coinTypeStringIsPreCalculated() {
-        final CoinType coinType = purpose(44).coinType(0);
+        final CoinType coinType = m().purpose(44).coinType(0);
         assertSame(coinType.toString(), coinType.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void coinType_negative() {
-        purpose(44).coinType(-1);
+        m().purpose(44).coinType(-1);
     }
 }

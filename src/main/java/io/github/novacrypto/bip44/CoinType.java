@@ -23,6 +23,10 @@ package io.github.novacrypto.bip44;
 
 import static io.github.novacrypto.bip32.Index.isHardened;
 
+/**
+ * Represents the 3rd part of a BIP44 path. Create via a {@link Purpose}.
+ * m / purpose' / coin_type' / account' / change / address_index
+ */
 public final class CoinType {
     private final Purpose purpose;
     private final int coinType;
@@ -49,6 +53,12 @@ public final class CoinType {
         return string;
     }
 
+    /**
+     * Create a {@link Account} for this purpose and coin type.
+     *
+     * @param account The account number
+     * @return An {@link Account} instance for this purpose and coin type
+     */
     public Account account(final int account) {
         return new Account(this, account);
     }

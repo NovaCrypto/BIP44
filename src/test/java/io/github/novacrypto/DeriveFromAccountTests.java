@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Function;
 
-import static io.github.novacrypto.bip44.Purpose.purpose;
+import static io.github.novacrypto.bip44.BIP44.m;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -61,12 +61,12 @@ public final class DeriveFromAccountTests {
     @Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"m/44'/0'/0'", "/0/0", purpose(44).coinType(0).account(0), (Map) (Account acc) -> acc.external().address(0)},
-                {"m/44'/0'/0'", "/0/1", purpose(44).coinType(0).account(0), (Map) (Account acc) -> acc.external().address(1)},
-                {"m/44'/0'/0'", "/1/0", purpose(44).coinType(0).account(0), (Map) (Account acc) -> acc.internal().address(0)},
-                {"m/44'/0'/1'", "/0/0", purpose(44).coinType(0).account(1), (Map) (Account acc) -> acc.external().address(0)},
-                {"m/44'/1'/0'", "/0/0", purpose(44).coinType(1).account(0), (Map) (Account acc) -> acc.external().address(0)},
-                {"m/49'/0'/0'", "/0/0", purpose(49).coinType(0).account(0), (Map) (Account acc) -> acc.external().address(0)}
+                {"m/44'/0'/0'", "/0/0", m().purpose(44).coinType(0).account(0), (Map) (Account acc) -> acc.external().address(0)},
+                {"m/44'/0'/0'", "/0/1", m().purpose(44).coinType(0).account(0), (Map) (Account acc) -> acc.external().address(1)},
+                {"m/44'/0'/0'", "/1/0", m().purpose(44).coinType(0).account(0), (Map) (Account acc) -> acc.internal().address(0)},
+                {"m/44'/0'/1'", "/0/0", m().purpose(44).coinType(0).account(1), (Map) (Account acc) -> acc.external().address(0)},
+                {"m/44'/1'/0'", "/0/0", m().purpose(44).coinType(1).account(0), (Map) (Account acc) -> acc.external().address(0)},
+                {"m/49'/0'/0'", "/0/0", m().purpose(49).coinType(0).account(0), (Map) (Account acc) -> acc.external().address(0)}
         });
     }
 

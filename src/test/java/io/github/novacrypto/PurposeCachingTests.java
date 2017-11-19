@@ -21,51 +21,36 @@
 
 package io.github.novacrypto;
 
-import io.github.novacrypto.bip44.Purpose;
 import org.junit.Test;
 
 import static io.github.novacrypto.bip44.BIP44.m;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
-public final class PurposeTests {
+public final class PurposeCachingTests {
 
     @Test
-    public void purpose44() {
-        assertEquals("m/44'", m().purpose(44).toString());
-    }
-
-    @Test
-    public void purpose49() {
-        assertEquals("m/49'", m().purpose(49).toString());
+    public void purpose44IsConstant() {
+        assertSame(m().purpose(44), m().purpose(44));
     }
 
     @Test
-    public void purpose44getValue() {
-        assertEquals(44, m().purpose(44).getValue());
+    public void purpose44MethodIsConstant() {
+        assertSame(m().purpose(44), m().purpose44());
     }
 
     @Test
-    public void purpose49getValue() {
-        assertEquals(49, m().purpose(49).getValue());
+    public void purpose49IsConstant() {
+        assertSame(m().purpose(49), m().purpose(49));
     }
 
     @Test
-    public void purposeStringIsPreCalculated() {
-        final Purpose purpose = m().purpose(44);
-        assertSame(purpose.toString(), purpose.toString());
+    public void purpose49MethodIsConstant() {
+        assertSame(m().purpose(49), m().purpose49());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void purpose_negative() {
-        m().purpose(-1);
-    }
-
-    /**
-     * 0 is a known invalid purpose, see https://github.com/bitcoin/bips/blob/master/bip-0043.mediawiki
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void purpose0IsReservedByBIP32() {
-        m().purpose(0);
+    @Test
+    public void otherPurposesMayNotBeConstant() {
+        assertNotSame(m().purpose(Integer.MAX_VALUE), m().purpose(Integer.MAX_VALUE));
     }
 }
