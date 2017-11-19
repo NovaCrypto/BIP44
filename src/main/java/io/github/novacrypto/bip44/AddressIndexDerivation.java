@@ -21,22 +21,23 @@
 
 package io.github.novacrypto.bip44;
 
+import io.github.novacrypto.bip32.derivation.CkdFunction;
 import io.github.novacrypto.bip32.derivation.Derivation;
 
 import static io.github.novacrypto.bip32.Index.hard;
 
 final class AddressIndexDerivation implements Derivation<AddressIndex> {
     @Override
-    public <Node> Node derive(final Node root, final AddressIndex addressIndex, final Visitor<Node> visitor) {
+    public <Node> Node derive(final Node root, final AddressIndex addressIndex, final CkdFunction<Node> ckdFunction) {
         final Change change = addressIndex.getParent();
         final Account account = change.getParent();
         final CoinType coinType = account.getParent();
         final Purpose purpose = coinType.getParent();
-        return visitor.visit(
-                visitor.visit(
-                        visitor.visit(
-                                visitor.visit(
-                                        visitor.visit(root,
+        return ckdFunction.deriveChildKey(
+                ckdFunction.deriveChildKey(
+                        ckdFunction.deriveChildKey(
+                                ckdFunction.deriveChildKey(
+                                        ckdFunction.deriveChildKey(root,
                                                 hard(purpose.getValue())),
                                         hard(coinType.getValue())),
                                 hard(account.getValue())),

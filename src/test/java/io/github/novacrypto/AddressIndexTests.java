@@ -82,4 +82,9 @@ public final class AddressIndexTests {
         final AddressIndex addressIndex = purpose(44).coinType(0).account(0).internal().address(0);
         assertSame(addressIndex.toString(), addressIndex.toString());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void index_negative() {
+        purpose(44).coinType(0).account(0).internal().address(-1);
+    }
 }

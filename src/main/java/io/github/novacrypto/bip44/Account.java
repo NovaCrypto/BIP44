@@ -23,7 +23,7 @@ package io.github.novacrypto.bip44;
 
 import io.github.novacrypto.bip32.derivation.Derivation;
 
-import static io.github.novacrypto.bip32.Index.hardened;
+import static io.github.novacrypto.bip32.Index.isHardened;
 
 public final class Account {
     public static final Derivation<Account> DERIVATION = new AccountDerivation();
@@ -33,7 +33,7 @@ public final class Account {
     private final String string;
 
     Account(final CoinType coinType, final int account) {
-        if (hardened(account))
+        if (isHardened(account))
             throw new IllegalArgumentException();
         this.coinType = coinType;
         this.account = account;

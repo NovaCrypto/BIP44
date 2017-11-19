@@ -23,6 +23,8 @@ package io.github.novacrypto.bip44;
 
 import io.github.novacrypto.bip32.derivation.Derivation;
 
+import static io.github.novacrypto.bip32.Index.isHardened;
+
 public final class AddressIndex {
     public static final Derivation<AddressIndex> DERIVATION = new AddressIndexDerivation();
     public static final Derivation<AddressIndex> DERIVATION_FROM_ACCOUNT = new AddressIndexFromAccountDerivation();
@@ -33,6 +35,8 @@ public final class AddressIndex {
     private final String string;
 
     AddressIndex(final Change change, final int addressIndex) {
+        if (isHardened(addressIndex))
+            throw new IllegalArgumentException();
         this.change = change;
         this.addressIndex = addressIndex;
         string = String.format("%s/%d", change, addressIndex);

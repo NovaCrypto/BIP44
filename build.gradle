@@ -71,7 +71,8 @@ compileJava {
 }
 
 dependencies {
-    compile 'io.github.novacrypto:BIP32:0.0.4'
+    compile 'io.github.novacrypto:BIP32derivation:0.0.2'
     testCompile 'junit:junit:4.12'
+    testCompile 'io.github.novacrypto:BIP32:0.0.5'
     testCompile 'io.github.novacrypto:BIP39:0.1.7'
 }

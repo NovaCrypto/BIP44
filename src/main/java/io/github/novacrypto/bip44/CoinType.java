@@ -21,7 +21,7 @@
 
 package io.github.novacrypto.bip44;
 
-import static io.github.novacrypto.bip32.Index.hardened;
+import static io.github.novacrypto.bip32.Index.isHardened;
 
 public final class CoinType {
     private final Purpose purpose;
@@ -29,7 +29,7 @@ public final class CoinType {
     private final String string;
 
     CoinType(final Purpose purpose, final int coinType) {
-        if (hardened(coinType))
+        if (isHardened(coinType))
             throw new IllegalArgumentException();
         this.purpose = purpose;
         this.coinType = coinType;
