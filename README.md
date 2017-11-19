@@ -46,11 +46,46 @@ String path = purpose(44)
 
 # Deriving
 
-Using [NovaCrypto/BIP32](https://github.com/NovaCrypto/BIP32) keys.
+Using [NovaCrypto/BIP32Derivation](https://github.com/NovaCrypto/BIP32Derivation) keys.
+
+## From root
+
+```
+Derive<YourKeyType> derive = new CkdFunctionDerive<>((parent, childIndex) -> {/*your CKD function*/}, yourRootKey);
+YourKeyType ketAtPath = derive.derive(addressIndex, AddressIndex.DERIVATION);
+```
+
+## Account from root
+
+```
+Account account = purpose(44)
+                  .coinType(2)
+                  .account(1);
+YourKeyType addressKey = derive
+                  .derive(account, Account.DERIVATION);
+```
+
+## From account private
+
+```
+YourKeyType addressKey = accountPrivateKey
+                  .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
+```
+
+## From account public
+
+```
+YourKeyType addressKey = accountPublicKey
+                  .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
+```
+
+# Deriving from NovaCrypto BIP32
+
+Using [NovaCrypto/BIP32](https://github.com/NovaCrypto/BIP32) keys, which implement `Derive<>` directly:
 
 # WIP
 
-!!! Note that the dependency [BIP32](https://github.com/NovaCrypto/BIP32) is a work in progress and you shouldn't use this just yet for any main net transactions. !!!
+!!! Note that [BIP32](https://github.com/NovaCrypto/BIP32) is a work in progress and you shouldn't use this just yet for any main net transactions. !!!
 
 ## From root
 
