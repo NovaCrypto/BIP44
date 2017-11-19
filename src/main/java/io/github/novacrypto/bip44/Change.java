@@ -21,6 +21,18 @@
 
 package io.github.novacrypto.bip44;
 
+/**
+ * The 5th part of a BIP44 path, create via a {@link Account}.
+ * m / purpose' / coin_type' / account' / change / address_index
+ * <p>
+ * Constant 0 is used for external chain and constant 1 for internal chain (also known as change addresses).
+ * External chain is used for addresses that are meant to be visible outside of the wallet (e.g. for receiving
+ * payments).
+ * Internal chain is used for addresses which are not meant to be visible outside of the wallet and is used for return
+ * transaction change.
+ * <p>
+ * Public derivation is used at this level (not hardened).
+ */
 public final class Change {
     private final Account account;
     private final int change;
@@ -45,6 +57,12 @@ public final class Change {
         return string;
     }
 
+    /**
+     * Create a {@link AddressIndex} for this purpose, coin type, account and change.
+     *
+     * @param addressIndex The index of the child
+     * @return A coin type instance for this purpose, coin type, account and change.
+     */
     public AddressIndex address(final int addressIndex) {
         return new AddressIndex(this, addressIndex);
     }

@@ -21,51 +21,28 @@
 
 package io.github.novacrypto;
 
-import io.github.novacrypto.bip44.Purpose;
+import io.github.novacrypto.bip44.M;
 import org.junit.Test;
 
 import static io.github.novacrypto.bip44.BIP44.m;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-public final class PurposeTests {
+public final class MTests {
 
     @Test
-    public void purpose44() {
-        assertEquals("m/44'", m().purpose(44).toString());
-    }
-
-    @Test
-    public void purpose49() {
-        assertEquals("m/49'", m().purpose(49).toString());
+    public void cached() {
+        assertSame(m(), m());
     }
 
     @Test
-    public void purpose44getValue() {
-        assertEquals(44, m().purpose(44).getValue());
+    public void toStringIsM() {
+        assertEquals("m", m().toString());
     }
 
     @Test
-    public void purpose49getValue() {
-        assertEquals(49, m().purpose(49).getValue());
-    }
-
-    @Test
-    public void purposeStringIsPreCalculated() {
-        final Purpose purpose = m().purpose(44);
-        assertSame(purpose.toString(), purpose.toString());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void purpose_negative() {
-        m().purpose(-1);
-    }
-
-    /**
-     * 0 is a known invalid purpose, see https://github.com/bitcoin/bips/blob/master/bip-0043.mediawiki
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void purpose0IsReservedByBIP32() {
-        m().purpose(0);
+    public void toStringIsCached() {
+        final M m = m();
+        assertSame(m.toString(), m.toString());
     }
 }

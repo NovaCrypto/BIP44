@@ -25,7 +25,7 @@ import io.github.novacrypto.bip44.Account;
 import io.github.novacrypto.bip44.Change;
 import org.junit.Test;
 
-import static io.github.novacrypto.bip44.Purpose.purpose;
+import static io.github.novacrypto.bip44.BIP44.m;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -34,48 +34,48 @@ public final class ChangeTests {
     @Test
     public void external() {
         assertEquals("m/44'/0'/0'/0",
-                purpose(44).coinType(0).account(0).external()
+                m().purpose(44).coinType(0).account(0).external()
                         .toString());
     }
 
     @Test
     public void internal() {
         assertEquals("m/44'/0'/0'/1",
-                purpose(44).coinType(0).account(0).internal()
+                m().purpose(44).coinType(0).account(0).internal()
                         .toString());
     }
 
     @Test
     public void externalGetValue() {
         assertEquals(0,
-                purpose(44).coinType(0).account(0).external()
+                m().purpose(44).coinType(0).account(0).external()
                         .getValue());
     }
 
     @Test
     public void internalGetValue() {
         assertEquals(1,
-                purpose(44).coinType(0).account(0).internal()
+                m().purpose(44).coinType(0).account(0).internal()
                         .getValue());
     }
 
     @Test
     public void getParent() {
-        final Account expected = purpose(44).coinType(0).account(0);
+        final Account expected = m().purpose(44).coinType(0).account(0);
         assertSame(expected, expected.internal().getParent());
     }
 
     @Test
     public void alternativePurposeAndCoinTypeAndAccount() {
         assertEquals("m/49'/1'/10'/1",
-                purpose(49).coinType(1).account(10)
+                m().purpose(49).coinType(1).account(10)
                         .internal()
                         .toString());
     }
 
     @Test
     public void stringIsPreCalculated() {
-        final Change change = purpose(44).coinType(0).account(0).internal();
+        final Change change = m().purpose(44).coinType(0).account(0).internal();
         assertSame(change.toString(), change.toString());
     }
 }

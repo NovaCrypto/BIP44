@@ -25,7 +25,7 @@ import io.github.novacrypto.bip44.AddressIndex;
 import io.github.novacrypto.bip44.Change;
 import org.junit.Test;
 
-import static io.github.novacrypto.bip44.Purpose.purpose;
+import static io.github.novacrypto.bip44.BIP44.m;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -34,7 +34,7 @@ public final class AddressIndexTests {
     @Test
     public void address0() {
         assertEquals("m/44'/0'/0'/0/0",
-                purpose(44).coinType(0).account(0).external()
+                m().purpose(44).coinType(0).account(0).external()
                         .address(0)
                         .toString());
     }
@@ -42,7 +42,7 @@ public final class AddressIndexTests {
     @Test
     public void address1() {
         assertEquals("m/44'/0'/0'/0/1",
-                purpose(44).coinType(0).account(0).external()
+                m().purpose(44).coinType(0).account(0).external()
                         .address(1)
                         .toString());
     }
@@ -50,7 +50,7 @@ public final class AddressIndexTests {
     @Test
     public void address0getValue() {
         assertEquals(0,
-                purpose(44).coinType(0).account(0).external()
+                m().purpose(44).coinType(0).account(0).external()
                         .address(0)
                         .getValue());
     }
@@ -58,33 +58,33 @@ public final class AddressIndexTests {
     @Test
     public void address1getValue() {
         assertEquals(1,
-                purpose(44).coinType(0).account(0).external()
+                m().purpose(44).coinType(0).account(0).external()
                         .address(1)
                         .getValue());
     }
 
     @Test
     public void getParent() {
-        final Change expected = purpose(44).coinType(0).account(0).external();
+        final Change expected = m().purpose(44).coinType(0).account(0).external();
         assertSame(expected, expected.address(0).getParent());
     }
 
     @Test
     public void alternativePurposeAndCoinTypeAndAccount() {
         assertEquals("m/49'/3'/2'/1/4",
-                purpose(49).coinType(3).account(2).internal()
+                m().purpose(49).coinType(3).account(2).internal()
                         .address(4)
                         .toString());
     }
 
     @Test
     public void stringIsPreCalculated() {
-        final AddressIndex addressIndex = purpose(44).coinType(0).account(0).internal().address(0);
+        final AddressIndex addressIndex = m().purpose(44).coinType(0).account(0).internal().address(0);
         assertSame(addressIndex.toString(), addressIndex.toString());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void index_negative() {
-        purpose(44).coinType(0).account(0).internal().address(-1);
+        m().purpose(44).coinType(0).account(0).internal().address(-1);
     }
 }
