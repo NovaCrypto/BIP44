@@ -70,14 +70,16 @@ YourKeyType addressKey = derive
 ## From account private
 
 ```
-YourKeyType addressKey = accountPrivateKey
+Derive<YourKeyType> derive = new CkdFunctionDerive<>((parent, childIndex) -> {/*your CKD function*/}, accountPrivateKey);
+YourKeyType addressKey = derive
                      .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
 ```
 
 ## From account public
 
 ```
-YourKeyType addressKey = accountPublicKey
+Derive<YourKeyType> derive = new CkdFunctionDerive<>((parent, childIndex) -> {/*your CKD function*/}, accountPublicKey);
+YourKeyType addressKey = derive
                      .derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
 ```
 
