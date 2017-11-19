@@ -21,14 +21,15 @@
 
 package io.github.novacrypto.bip44;
 
+import io.github.novacrypto.bip32.derivation.CkdFunction;
 import io.github.novacrypto.bip32.derivation.Derivation;
 
 final class AddressIndexFromAccountDerivation implements Derivation<AddressIndex> {
     @Override
-    public <Node> Node derive(final Node accountNode, final AddressIndex addressIndex, final Visitor<Node> visitor) {
+    public <Node> Node derive(final Node accountNode, final AddressIndex addressIndex, final CkdFunction<Node> ckdFunction) {
         final Change change = addressIndex.getParent();
-        return visitor.visit(
-                visitor.visit(accountNode,
+        return ckdFunction.deriveChildKey(
+                ckdFunction.deriveChildKey(accountNode,
                         change.getValue()),
                 addressIndex.getValue());
     }
