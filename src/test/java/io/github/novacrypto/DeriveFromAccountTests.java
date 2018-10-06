@@ -1,6 +1,6 @@
 /*
  *  BIP44
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 
 package io.github.novacrypto;
 
-import io.github.novacrypto.bip32.PrivateKey;
-import io.github.novacrypto.bip32.PublicKey;
+import io.github.novacrypto.bip32.ExtendedPrivateKey;
+import io.github.novacrypto.bip32.ExtendedPublicKey;
 import io.github.novacrypto.bip32.derivation.Derive;
 import io.github.novacrypto.bip32.networks.Bitcoin;
 import io.github.novacrypto.bip39.SeedCalculator;
@@ -54,7 +54,7 @@ public final class DeriveFromAccountTests {
 
     }
 
-    private static final PrivateKey rootKey = PrivateKey.fromSeed(new SeedCalculator().calculateSeed("dial repeat accuse hen century accident route indicate middle render gate dignity",
+    private static final ExtendedPrivateKey rootKey = ExtendedPrivateKey.fromSeed(new SeedCalculator().calculateSeed("dial repeat accuse hen century accident route indicate middle render gate dignity",
             ""), Bitcoin.MAIN_NET);
 
 
@@ -92,9 +92,9 @@ public final class DeriveFromAccountTests {
 
     @Test
     public void deriveAccountWithCache() {
-        final Derive<PrivateKey> withCache = rootKey.deriveWithCache();
-        PrivateKey expected = withCache.derive(accountPath);
-        PrivateKey actual = withCache.derive(account, Account.DERIVATION);
+        final Derive<ExtendedPrivateKey> withCache = rootKey.deriveWithCache();
+        ExtendedPrivateKey expected = withCache.derive(accountPath);
+        ExtendedPrivateKey actual = withCache.derive(account, Account.DERIVATION);
         assertSame(expected, actual);
     }
 
@@ -102,7 +102,7 @@ public final class DeriveFromAccountTests {
     public void deriveFromAccountPrivate() {
         String expected = rootKey.derive(path).neuter().p2pkhAddress();
 
-        PrivateKey accountPrivate = rootKey.derive(accountPath);
+        ExtendedPrivateKey accountPrivate = rootKey.derive(accountPath);
         String actual = accountPrivate.derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT).neuter().p2pkhAddress();
         assertEquals(expected, actual);
     }
@@ -111,16 +111,16 @@ public final class DeriveFromAccountTests {
     public void deriveFromAccountPublic() {
         String expected = rootKey.derive(path).neuter().p2pkhAddress();
 
-        PublicKey accountPublic = rootKey.derive(accountPath).neuter();
+        ExtendedPublicKey accountPublic = rootKey.derive(accountPath).neuter();
         String actual = accountPublic.derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT).p2pkhAddress();
         assertEquals(expected, actual);
     }
 
     @Test
     public void deriveWithCache() {
-        Derive<PrivateKey> accountPrivate = rootKey.derive(accountPath).deriveWithCache();
-        PrivateKey expected = accountPrivate.derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
-        PrivateKey actual = accountPrivate.derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
+        Derive<ExtendedPrivateKey> accountPrivate = rootKey.derive(accountPath).deriveWithCache();
+        ExtendedPrivateKey expected = accountPrivate.derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
+        ExtendedPrivateKey actual = accountPrivate.derive(addressIndex, AddressIndex.DERIVATION_FROM_ACCOUNT);
         assertSame(expected, actual);
     }
 }

@@ -1,6 +1,6 @@
 /*
  *  BIP44
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 
 package io.github.novacrypto;
 
-import io.github.novacrypto.bip32.PrivateKey;
+import io.github.novacrypto.bip32.ExtendedPrivateKey;
 import io.github.novacrypto.bip32.derivation.Derive;
 import io.github.novacrypto.bip32.networks.Bitcoin;
 import io.github.novacrypto.bip39.SeedCalculator;
@@ -42,7 +42,7 @@ import static org.junit.Assert.assertSame;
 @RunWith(Parameterized.class)
 public final class DeriveFromRootTests {
 
-    private static final PrivateKey rootKey = PrivateKey.fromSeed(new SeedCalculator().calculateSeed("dial repeat accuse hen century accident route indicate middle render gate dignity",
+    private static final ExtendedPrivateKey rootKey = ExtendedPrivateKey.fromSeed(new SeedCalculator().calculateSeed("dial repeat accuse hen century accident route indicate middle render gate dignity",
             ""), Bitcoin.MAIN_NET);
 
     private final String path;
@@ -79,9 +79,9 @@ public final class DeriveFromRootTests {
 
     @Test
     public void deriveWithCache() {
-        final Derive<PrivateKey> withCache = rootKey.deriveWithCache();
-        PrivateKey expected = withCache.derive(path);
-        PrivateKey actual = withCache.derive(addressIndex, AddressIndex.DERIVATION);
+        final Derive<ExtendedPrivateKey> withCache = rootKey.deriveWithCache();
+        ExtendedPrivateKey expected = withCache.derive(path);
+        ExtendedPrivateKey actual = withCache.derive(addressIndex, AddressIndex.DERIVATION);
         assertSame(expected, actual);
     }
 }

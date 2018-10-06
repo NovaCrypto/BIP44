@@ -1,6 +1,6 @@
 /*
  *  BIP44
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
     }
 }
 
@@ -38,7 +38,7 @@ apply from: 'bintray.gradle'
 apply plugin: 'com.github.ben-manes.versions'
 
 group 'io.github.novacrypto'
-version '0.0.3'
+version '2018.10.06'
 
 // To upload a new version
 // ./gradlew clean build bintrayUpload -Puser=user -Pkey=APIKEY
@@ -48,10 +48,10 @@ bintray {
     publications = ['MyPublication']
     pkg {
         repo = 'BIP'
-        name = 'BIP44'
+        name = project.name
         userOrg = 'novacrypto'
         licenses = ['GPL-3.0']
-        vcsUrl = 'https://github.com/NovaCrypto/BIP44.git'
+        vcsUrl = "https://github.com/NovaCrypto/${project.name}.git"
         version {
             name = project.version
         }
@@ -71,8 +71,12 @@ compileJava {
 }
 
 dependencies {
-    compile 'io.github.novacrypto:BIP32derivation:0.0.2'
+    compile 'io.github.novacrypto:BIP32derivation:2018.10.06'
     testCompile 'junit:junit:4.12'
-    testCompile 'io.github.novacrypto:BIP32:0.0.5'
-    testCompile 'io.github.novacrypto:BIP39:0.1.7'
+    testCompile 'io.github.novacrypto:BIP32:2018.10.06'
+    testCompile 'io.github.novacrypto:BIP39:2018.10.06'
 }
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+javadoc.options.encoding = 'UTF-8'

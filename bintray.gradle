@@ -1,6 +1,6 @@
 /*
  *  BIP44
- *  Copyright (C) 2017 Alan Evans, NovaCrypto
+ *  Copyright (C) 2017-2018 Alan Evans, NovaCrypto
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,6 +56,10 @@ publishing {
     }
 }
 
+jacoco {
+    toolVersion = '0.8.2'
+}
+
 jacocoTestReport {
     reports {
         xml.enabled = true
@@ -74,6 +78,7 @@ dependencyUpdates {
 }
 
 bintrayUpload.dependsOn(dependencyUpdates)
+bintrayUpload.dependsOn(check)
 
 task('installSharedIdea', type: Copy) {
     description = "Copy the shared intellij files into local .idea/"
