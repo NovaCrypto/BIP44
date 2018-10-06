@@ -24,8 +24,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
     }
 }
 
@@ -73,8 +73,8 @@ compileJava {
 dependencies {
     compile 'io.github.novacrypto:BIP32derivation:0.0.2'
     testCompile 'junit:junit:4.12'
-    testCompile 'io.github.novacrypto:BIP32:0.0.5'
-    testCompile 'io.github.novacrypto:BIP39:0.1.7'
+    testCompile 'io.github.novacrypto:BIP32:0.0.9'
+    testCompile 'io.github.novacrypto:BIP39:0.1.9'
 }
 
 compileJava.options.encoding = 'UTF-8'
