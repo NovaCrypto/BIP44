@@ -56,6 +56,10 @@ publishing {
     }
 }
 
+jacoco {
+    toolVersion = '0.8.2'
+}
+
 jacocoTestReport {
     reports {
         xml.enabled = true
@@ -74,6 +78,7 @@ dependencyUpdates {
 }
 
 bintrayUpload.dependsOn(dependencyUpdates)
+bintrayUpload.dependsOn(check)
 
 task('installSharedIdea', type: Copy) {
     description = "Copy the shared intellij files into local .idea/"
